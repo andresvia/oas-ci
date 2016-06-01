@@ -44,6 +44,8 @@ Visite luego la URL: http://oasdrone.192.168.12.212.xip.io:8000/ las credenciale
 
 Lea la [documentación de Drone](http://readme.drone.io/).
 
+## Paso a producción
+
 Lea el archivo `installer.sh` para replicar el procedimiento en un servidor real.
 
 Lea la documentación de `oas-ci-server` para conocer más detalles internos.
