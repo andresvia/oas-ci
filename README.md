@@ -48,4 +48,4 @@ Se necesita un servidor CentOS/7 con salida directa a Internet y con un nombre d
 
 Lea el archivo `installer.sh` para replicar el procedimiento en un servidor real.
 
-Lea la documentación de `oas-ci-server` para conocer más detalles internos.
+Lea la documentación de [oas-ci-server](https://github.com/andresvia/oas-ci-server) para conocer más detalles internos.
