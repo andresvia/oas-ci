@@ -44,10 +44,10 @@ Las URL's en este caso son:
 
 Espere un momento, el primer inicio puede tomar tiempo, ya que se están descargando todas las imágenes de Internet. Siga mirando los logs.
 
-Esto significa que **swarm-manager** está listo:
+Esto significa que **ci-swarm-manage** está listo:
 
 ```
-==> default: Jun 01 15:15:47 192.168.12.XXX.xip.io swarm-manage-start[12108]: time="2016-06-01T19:15:47Z" level=info msg="Registered Engine 192.168.12.XXX.xip.io at 172.17.0.1:2376"
+==> default: Jun 01 15:15:47 192.168.12.XXX.xip.io ci-swarm-manage-start[12108]: time="2016-06-01T19:15:47Z" level=info msg="Registered Engine 192.168.12.XXX.xip.io at 172.17.0.1:2376"
 ```
 
 Esto significa que **gogs** está listo:

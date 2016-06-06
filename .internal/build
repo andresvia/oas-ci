@@ -51,7 +51,7 @@ fi
 if fpm --help > /dev/null
 then
   set -x
-  fpm --description 'Crea un ambiente de pruebas del sistema de CI de OAS' --package target -C target-root -s dir -t rpm --name "oas-ci"  --version "${OAS_VERSION}" --before-install scripts/before-install --after-install scripts/after-install --before-remove scripts/before-remove --after-remove scripts/after-remove --before-upgrade scripts/before-upgrade --after-upgrade scripts/after-upgrade --rpm-os linux  .
+  fpm --description 'Crea un ambiente de pruebas del sistema de CI de OAS' --package target -C target-root -s dir -t rpm --name "oas-ci" --version "${OAS_VERSION}" --before-install scripts/before-install --after-install scripts/after-install --before-remove scripts/before-remove --after-remove scripts/after-remove --before-upgrade scripts/before-upgrade --after-upgrade scripts/after-upgrade --rpm-os linux --rpm-sign .
 else
   echo no se encontró fpm
   exit 1
