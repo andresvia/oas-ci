@@ -1,0 +1,4 @@
+project_name: oas-ci
+project_description: Crea un ambiente de pruebas del sistema de CI de OAS
+project_purpose: Ofrecer la misma plataforma de integración en todos los ambientes, empezando por los PC de escritorio
+organizational_unit: Plataforma

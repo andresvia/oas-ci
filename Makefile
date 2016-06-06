@@ -1,6 +1,6 @@
 # Este archivo fue creado con "oasproj init" y será sobre-escrito con "oasproj update"
+all:
+	bash .internal/build
 
-
-target
-target-root
-.vagrant
+test:
+	bash .internal/test

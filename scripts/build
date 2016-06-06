@@ -1,0 +1,8 @@
+# Este archivo fue creado con "oasproj init" y será sobre-escrito con "oasproj update --force"
+
+# Estas son las variables de entorno disponibles durante la construcción
+
+# "${OAS_VERSION}"      => contiene la version a construir
+# "${OAS_NAME}"         => nombre del paquete que proviene del archivo de descripción de proyecto
+
+
