@@ -9,14 +9,15 @@ fqdn="$(hostname -f)"
 
 # ubicación de los paquetes
 ci_ca_pkg="https://github.com/andresvia/oas-ci-swarm-ca/releases/download/v0.0.2/oas-ci-swarm-ca-0.0.2_travis.4-1.x86_64.rpm"
-ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.0.8/oas-ci-server-0.0.8_travis.23-1.x86_64.rpm"
-ci_agent_pkg="https://github.com/andresvia/oas-ci-agent/releases/download/v0.0.10/oas-ci-agent-0.0.9_travis.21-1.x86_64.rpm"
+ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.1.0/oas-ci-server-0.1.0_travis.25-1.x86_64.rpm"
+ci_agent_pkg="https://github.com/andresvia/oas-ci-agent/releases/download/v0.1.0/oas-ci-agent-0.1.0_travis.23-1.x86_64.rpm"
 
 # hay muchas políticas de selinux que hay que encontrar primero antes de habilitar el modo "enforcing", se deja como tarea para el administrador de sistemas encontrar todas las reglas de selinux necesarias
 setenforce permissive
 sed -i.bak 's/^SELINUX=.*/SELINUX=permissive/' /etc/selinux/config
 
 # instalar el paquete de oas-ci-swarm-ca
+# es necesario para crear los certificados tls, en producción se recomienda instalar en un servidor aparte
 yum install -y "${ci_ca_pkg}" || true
 if ! rpm -q oas-ci-swarm-ca > /dev/null
 then
@@ -54,11 +55,30 @@ then
   exit 1
 fi
 
+# esto se debe hacer en los agentes para permitir que puedan bajar imágenes del registry
+sed -i.bak "s|^#\? \?INSECURE_REGISTRY=.*|INSECURE_REGISTRY='--insecure-registry=${fqdn}:5000'|" /etc/sysconfig/docker
+
+# crear el grupo docker de manera que otros usuarios aparte de root lo puedan usar
+groupadd -r docker || true
+if ! egrep '^docker:' /etc/group
+then
+  echo no se pudo crear el grupo de sistema docker
+  exit 1
+fi
+
+# poner al usuario vagrant en el grupo docker de manera que pueda ejecutar comandos de docker
+usermod -a -G docker vagrant || true
+if ! egrep '^docker:.*vagrant.*' /etc/group
+then
+  echo no se pudo agregar al usuario vagrant al grupo de docker
+  exit 1
+fi
+
 # habilitar e iniciar todos los servicios
-servicios=(docker ci-swarm-manage gogs drone)
+servicios=(docker ci-swarm-manage gogs drone registry registry-frontend)
 for servicio in ${servicios[@]}
 do
   systemctl enable $servicio
   systemctl start $servicio
-  systemctl status $servicio -l
+  systemctl status $servicio
 done

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# esto hace que el script falle inmediatamente ocurra el primer error y no permite usar variables que no han sido declaradas
+set -eu
+
+# logs de todos los servicios
+servicios=(ci-swarm-manage gogs drone registry registry-frontend)
+for servicio in ${servicios[@]}
+do
+  echo status de $servicio
+  systemctl status $servicio
+done

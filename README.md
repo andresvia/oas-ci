@@ -1,44 +1,63 @@
 # oas-ci
 
+Requiere [Vagrant](http://www.vagrantup.com/) reciente. Si esto no es una opción para usted pase directamente a la sección **Paso a producción (o instalación sin hipervisor)**.
+
 ## ¿Cómo utilizar esto?
 
-### En un [OAS Workspace](https://github.com/andresvia/oas-workspace)
-
-Simplemente ejecute:
-
-```
-sudo ./installer.sh
-```
-
-Para ver los últimos logs de los servicios iniciados vuelva a ejecutar:
-
-```
-sudo ./installer.sh
-```
-
-Las URL's en este caso son:
-
-- Gogs: http://gogs.192.168.12.37.xip.io:3000/
-- Drone: http://drone.192.168.12.37.xip.io:8000/
+Advertencia: No se han hecho pruebas utilizando un proxy HTTP.
 
 ### Sin [OAS Workspace](https://github.com/andresvia/oas-workspace)
 
-Simplemente ejecute:
+Simplemente ejecute el comando apropiado:
+
+Para usar libvirt como proveedor utilice
 
 ```
-vagrant up
+vagrant plugin install vagrant-libvirt
+vagrant up --provider libvirt
+```
+
+Para usar VirtualBox como proveedor, instale VirtualBox y utilice:
+
+```
+vagrant up --provider virtualbox
 ```
 
 Para ver los últimos logs de los servicios iniciados ejecute:
 
 ```
-vagrant provision
+vagrant ssh -c "bash" < scripts/logs
 ```
 
 Las URL's en este caso son:
 
 - Gogs: http://gogs.192.168.12.212.xip.io:3000/
 - Drone: http://drone.192.168.12.212.xip.io:8000/
+- Registry: http://registry.192.168.12.212.xip.io:5000/
+- Registry Frontend: http://registry.192.168.12.212.xip.io:8080/
+
+### En un [OAS Workspace](https://github.com/andresvia/oas-workspace)
+
+Advertencia: oas-workspace aún no ha sido suficientemente probado.
+
+Simplemente ejecute:
+
+```
+sudo ./scripts/installer
+```
+
+Para ver los últimos logs de los servicios iniciados ejecute:
+
+```
+./scripts/logs
+```
+
+Las URL's en este caso son:
+
+- Gogs: http://gogs.192.168.12.37.xip.io:3000/
+- Drone: http://drone.192.168.12.37.xip.io:8000/
+- Registry: http://registry.192.168.12.37.xip.io:5000/
+- Registry Frontend: http://registry.192.168.12.37.xip.io:8080/
 
 ## ¿Cómo configurar esto?
 
@@ -47,33 +66,75 @@ Espere un momento, el primer inicio puede tomar tiempo, ya que se están descarg
 Esto significa que **ci-swarm-manage** está listo:
 
 ```
-==> default: Jun 01 15:15:47 192.168.12.XXX.xip.io ci-swarm-manage-start[12108]: time="2016-06-01T19:15:47Z" level=info msg="Registered Engine 192.168.12.XXX.xip.io at 172.17.0.1:2376"
+/usr/bin/docker-current start --attach=true ci-swarm-manage
 ```
 
 Esto significa que **gogs** está listo:
 
 ```
-==> default: Jun 01 15:17:22 192.168.12.XXX.xip.io gogs-start[12160]: 2016/06/01 19:17:22 [I] Listen: http://0.0.0.0:3000
+/usr/bin/docker-current start --attach=true gogs
 ```
 
-Y esto significa que **drone** está listo
+Esto significa que **drone** está listo
 
 ```
-==> default: Jun 01 15:16:49 192.168.12.XXX.xip.io drone-start[12135]: [GIN-debug]...
+/usr/bin/docker-current start --attach=true drone
 ```
 
-Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022, utilice el FQDN del servidor para configurar todos los parámetros. Según pantallazo.
+Esto significa que **registry** está listo
+
+```
+/usr/bin/docker-current start --attach=true registry
+```
+
+Esto significa que **registry-frontend** está listo
+
+```
+/usr/bin/docker-current start --attach=true registry-frontend
+```
+
+Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022, utilice el FQDN del servidor para configurar todos los parámetros. Tome como ejemplo el pantallazo.
 
 ![pantallazo de instalación de gogs](http://i.imgur.com/EUNC4Bz.png)
 
-Visite luego la URL de Drone, las credenciales a utilizar son las mismas de Gogs, luego conecte cualquier repositorio que haya creado en Gogs para comenzar a hacer integración contínua.
+Visite luego la URL de Drone, (las credenciales a utilizar son las mismas de Gogs), luego conecte cualquier repositorio que haya creado en Gogs para comenzar a hacer integración contínua.
 
 Lea la [documentación de Drone](http://readme.drone.io/).
 
-## Paso a producción
+## Solución de problemas
 
-Se necesita un servidor CentOS/7 con salida directa a Internet y con un nombre de DNS que se pueda resolver.
+Si el proveedor es VirtualBox se tratarán de ubicar 4GB de RAM para la máquina virtual. Si esto representa un problema para tu setup ejecuta lo siguiente antes del comando `vagrant up`:
 
-Lea el archivo `installer.sh` para replicar el procedimiento en un servidor real.
+```
+export OAS_CI_VBOX_MEMORY=XXXX
+```
 
-Lea la documentación de [oas-ci-server](https://github.com/andresvia/oas-ci-server) para conocer más detalles internos.
+Dónde XXXX es la cantidad de memoria que se ubicará para la máquina virtual (en MBs).
+
+Si el proveedor es libvirt se tratarán de ubicar 2GB de RAM para la máquina virtual. Si esto representa un problema para tu setup ejecuta lo siguiente antes del comando `vagrant up`:
+
+```
+export OAS_CI_LIBVIRT_MEMORY=XXXX
+```
+
+Dónde XXXX es la cantidad de memoria que se ubicará para la máquina virtual (en MBs).
+
+## Paso a producción (o instalación sin hipervisor)
+
+El paso a producción o la instalación sin hipervisor no es totalmente automático (pero se acerca bastánte) y requiere algunas habilidades de SysAdmin.
+
+Se necesita un servidor CentOS/7 con salida directa a Internet y con un nombre de DNS que se pueda resolver y que sea igual a su FQDN (`hostname -f`) sobretodo si se desea que el sistema sea utilizable por otras personas, para un despliegue "local" este requerimiento puede no ser totalmente necesario.
+
+Lea el archivo `scripts/installer` para replicar el procedimiento en servidores reales.
+
+Si es un SysAdmin lea las documentaciones en:
+
+  - [oas-ci-server](https://github.com/andresvia/oas-ci-server)
+  - [oas-ci-agent](https://github.com/andresvia/oas-ci-agent)
+  - [oas-ci-swarm-ca](https://github.com/andresvia/oas-ci-swarm-ca)
+
+Para conocer más detalles internos.
+
+## ¿Bugs?
+
+Si encuentra un bug, cree un "issue" en este proyecto. La falta o errores de documentación también se considera un bug.
