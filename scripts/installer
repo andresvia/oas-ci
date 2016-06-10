@@ -9,8 +9,8 @@ fqdn="$(hostname -f)"
 
 # ubicación de los paquetes
 ci_ca_pkg="https://github.com/andresvia/oas-ci-swarm-ca/releases/download/v0.0.2/oas-ci-swarm-ca-0.0.2_travis.4-1.x86_64.rpm"
-ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.1.0/oas-ci-server-0.1.0_travis.25-1.x86_64.rpm"
-ci_agent_pkg="https://github.com/andresvia/oas-ci-agent/releases/download/v0.1.0/oas-ci-agent-0.1.0_travis.23-1.x86_64.rpm"
+ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.1.1/oas-ci-server-0.1.1_travis.28-1.x86_64.rpm"
+ci_agent_pkg="https://github.com/andresvia/oas-ci-agent/releases/download/v0.1.2/oas-ci-agent-0.1.2_travis.27-1.x86_64.rpm"
 
 # hay muchas políticas de selinux que hay que encontrar primero antes de habilitar el modo "enforcing", se deja como tarea para el administrador de sistemas encontrar todas las reglas de selinux necesarias
 setenforce permissive
