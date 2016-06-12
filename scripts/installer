@@ -7,6 +7,17 @@ set -eu
 ca_home="/var/lib/docker-ci-swarm-ca"
 fqdn="$(hostname -f)"
 
+if ip addr list | egrep '\b192.168.12.212\b' > /dev/null
+then
+  ip_addr="192.168.12.212"
+elif ip addr list | egrep '\b192.168.12.37\b' > /dev/null
+then
+  ip_addr="192.168.12.37"
+else
+  echo "Este es un ambiente desconocido, me refuso a instalarme aquí"
+  exit 1
+fi
+
 # ubicación de los paquetes
 ci_ca_pkg="https://github.com/andresvia/oas-ci-swarm-ca/releases/download/v0.0.2/oas-ci-swarm-ca-0.0.2_travis.4-1.x86_64.rpm"
 ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.1.1/oas-ci-server-0.1.1_travis.28-1.x86_64.rpm"
@@ -26,12 +37,12 @@ then
 fi
 
 # utilizar el programa swarm-ci-create-server-cert para crear los certificados de swarm para ester servidor
-/usr/sbin/swarm-ci-create-server-cert swarm "$(hostname -f)"
+/usr/sbin/swarm-ci-create-server-cert swarm "${fqdn}" "${ip_addr}" # mas direcciones ip se pueden especificar aquí
 mkdir -p /etc/ci-swarm-manage/certs.d/
 cp -vf "${ca_home}/swarm/"* /etc/ci-swarm-manage/certs.d/
-if ! grep "${fqdn}" /etc/ci-swarm-manage/nodes > /dev/null
+if ! grep "${ip_addr}" /etc/ci-swarm-manage/nodes > /dev/null
 then
-  echo "${fqdn}:2376" >> /etc/ci-swarm-manage/nodes
+  echo "${ip_addr}:2376" >> /etc/ci-swarm-manage/nodes
 fi
 
 # instalar el paquete oas-ci-server
@@ -43,7 +54,7 @@ then
 fi
 
 # utilizar el programa swarm-ci-create-server-cert para crear los certificados de docker para ester servidor
-/usr/sbin/swarm-ci-create-server-cert server "$(hostname -f)"
+/usr/sbin/swarm-ci-create-server-cert server "${fqdn}" "${ip_addr}" # mas direcciones ip se pueden especificar aquí
 mkdir -p /etc/docker/certs.d/
 cp -vf "${ca_home}/${fqdn}/"* /etc/docker/certs.d/
 
@@ -55,8 +66,8 @@ then
   exit 1
 fi
 
-# esto se debe hacer en los agentes para permitir que puedan bajar imágenes del registry
-sed -i.bak "s|^#\? \?INSECURE_REGISTRY=.*|INSECURE_REGISTRY='--insecure-registry=${fqdn}:5000'|" /etc/sysconfig/docker
+# esto se debe hacer en los agentes para permitir que puedan bajar imágenes del registry o el registry debe contar con certificados SSL
+sed -i.bak "s|^#\? \?INSECURE_REGISTRY=.*|INSECURE_REGISTRY='--insecure-registry=${ip_addr}:5000'|" /etc/sysconfig/docker
 
 # crear el grupo docker de manera que otros usuarios aparte de root lo puedan usar
 groupadd -r docker || true
@@ -86,5 +97,5 @@ do
   systemctl status $servicio
 done
 
-# realizar una ejecución de ntpdate para tener el servidor sincronizado
-ntpdate -u pool.ntp.org
+# realizar una ejecución de ntpdate para tener el servidor sincronizado o fallar con gracia
+ntpdate -u pool.ntp.org || true

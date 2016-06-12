@@ -31,10 +31,10 @@ vagrant ssh -c "bash" < scripts/logs
 
 Las URL's en este caso son:
 
-- Gogs: http://gogs.192.168.12.212.xip.io:3000/
-- Drone: http://drone.192.168.12.212.xip.io:8000/
-- Registry: http://registry.192.168.12.212.xip.io:5000/
-- Registry Frontend: http://registry.192.168.12.212.xip.io:8080/
+- [Gogs](http://192.168.12.212:3000/)
+- [Drone](http://192.168.12.212:8000/)
+- [Registry](http://192.168.12.212:5000/)
+- [Registry Frontend](http://192.168.12.212:8080/)
 
 ### En un [OAS Workspace](https://github.com/andresvia/oas-workspace)
 
@@ -54,10 +54,10 @@ Para ver los últimos logs de los servicios iniciados ejecute:
 
 Las URL's en este caso son:
 
-- Gogs: http://gogs.192.168.12.37.xip.io:3000/
-- Drone: http://drone.192.168.12.37.xip.io:8000/
-- Registry: http://registry.192.168.12.37.xip.io:5000/
-- Registry Frontend: http://registry.192.168.12.37.xip.io:8080/
+- [Gogs](http://192.168.12.37:3000/)
+- [Drone](http://192.168.12.37:8000/)
+- [Registry](http://192.168.12.37:5000/)
+- [Registry Frontend](http://192.168.12.37:8080/)
 
 ## ¿Cómo configurar esto?
 
@@ -93,7 +93,7 @@ Esto significa que **registry-frontend** está listo
 /usr/bin/docker-current start --attach=true registry-frontend
 ```
 
-Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022, utilice el FQDN del servidor para configurar todos los parámetros. Tome como ejemplo el pantallazo.
+Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022, utilice la dirección del servidor (Dirección IP o FQDN que sea posible de resolver)
 
 ![pantallazo de instalación de gogs](http://i.imgur.com/EUNC4Bz.png)
 
@@ -123,7 +123,7 @@ Dónde XXXX es la cantidad de memoria que se ubicará para la máquina virtual (
 
 El paso a producción o la instalación sin hipervisor no es totalmente automático (pero se acerca bastánte) y requiere algunas habilidades de SysAdmin.
 
-Se necesita un servidor CentOS/7 con salida directa a Internet y con un nombre de DNS que se pueda resolver y que sea igual a su FQDN (`hostname -f`) sobretodo si se desea que el sistema sea utilizable por otras personas, para un despliegue "local" este requerimiento puede no ser totalmente necesario.
+Se necesita un servidor CentOS/7 con salida directa a Internet.
 
 Lea el archivo `scripts/installer` para replicar el procedimiento en servidores reales.
 

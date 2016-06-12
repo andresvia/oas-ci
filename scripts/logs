@@ -3,6 +3,16 @@
 # esto hace que el script falle inmediatamente ocurra el primer error y no permite usar variables que no han sido declaradas
 set -eu
 
+# verificar que swarm esté funcionando siempre y cuando se cuenten con los certificados de cliente
+sudo bash << EOF
+export DOCKER_CERT_PATH=/var/lib/docker-ci-swarm-ca/client
+export DOCKER_TLS_VERIFY=1
+export DOCKER_HOST=tcp://192.168.12.212:3376
+/usr/bin/docker-current info
+/usr/bin/docker-current ps
+true
+EOF
+
 # logs de todos los servicios
 servicios=(ci-swarm-manage gogs drone registry registry-frontend)
 for servicio in ${servicios[@]}
