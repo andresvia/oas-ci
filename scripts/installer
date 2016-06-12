@@ -74,11 +74,17 @@ then
   exit 1
 fi
 
-# habilitar e iniciar todos los servicios
-servicios=(docker ci-swarm-manage gogs drone registry registry-frontend)
+# instalar ntp para que el servidor tenga la hora sincronizada
+yum install -y ntp
+
+# habilitar e iniciar todos los servicios necesarios
+servicios=(docker ci-swarm-manage gogs drone registry registry-frontend ntpd)
 for servicio in ${servicios[@]}
 do
   systemctl enable $servicio
   systemctl start $servicio
   systemctl status $servicio
 done
+
+# realizar una ejecución de ntpdate para tener el servidor sincronizado
+ntpdate -u pool.ntp.org
