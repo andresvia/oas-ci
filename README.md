@@ -4,7 +4,50 @@ Requiere [Vagrant](http://www.vagrantup.com/) reciente. Si esto no es una opció
 
 ## ¿Cómo utilizar esto?
 
-Advertencia: No se han hecho pruebas utilizando un proxy HTTP.
+Si se encuentra detrás de un proxy HTTP estos son algunos de los lugares donde hay que configurarlo:
+
+```
+sudo vim /etc/environment /etc/sysconfig/docker /etc/drone/dronerc /etc/gogs/gogsrc /etc/registry/registryrc /etc/registry/registryferc
+```
+
+De esta manera
+
+```
+http_proxy=...
+https_proxy=...
+HTTP_PROXY=...
+HTTPS_PROXY=...
+no_proxy=...
+NO_PROXY=...
+```
+
+Y en estos archivos:
+
+```
+sudo vim /etc/profile.d/proxy.sh
+```
+
+Además de definir las variables se debe hacer:
+
+```
+export http_proxy
+export https_proxy
+export HTTP_PROXY
+export HTTPS_PROXY
+export no_proxy
+export NO_PROXY
+```
+
+Ejemplo: Proxy UD.
+
+```
+http_proxy=http://10.20.4.15:3128
+https_proxy=http://10.20.4.15:3128
+HTTP_PROXY=http://10.20.4.15:3128
+HTTPS_PROXY=http://10.20.4.15:3128
+no_proxy=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.udistrital.edu.co,.udistritaloas.edu.co
+NO_PROXY=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.udistrital.edu.co,.udistritaloas.edu.co
+```
 
 ### Sin [OAS Workspace](https://github.com/andresvia/oas-workspace)
 
