@@ -49,6 +49,17 @@ no_proxy=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.udistrital
 NO_PROXY=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.udistrital.edu.co,.udistritaloas.edu.co
 ```
 
+Para que funcione en una consola además ejecutar:
+
+```
+export http_proxy
+export https_proxy
+export HTTP_PROXY
+export HTTPS_PROXY
+export no_proxy
+export NO_PROXY
+```
+
 ### Sin [OAS Workspace](https://github.com/andresvia/oas-workspace)
 
 Simplemente ejecute el comando apropiado:
