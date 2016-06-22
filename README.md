@@ -16,7 +16,7 @@ vagrant up --provider libvirt
 Para usar VirtualBox como proveedor, instale VirtualBox y utilice: (**Necesita 4GB de RAM libres y 2 vCPUS**)
 
 ```
-vagrant up --provider virtualbox
+vagrant up --provider virtualbox && vagrant reload
 ```
 
 Para ver los últimos logs de los servicios iniciados ejecute:
