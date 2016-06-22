@@ -19,6 +19,8 @@ Para usar VirtualBox como proveedor, instale VirtualBox y utilice: (**Necesita 4
 vagrant up --provider virtualbox && vagrant provision && vagrant reload
 ```
 
+Este proceso tarda aproximadamente **3 minutos y 50 segundos**.
+
 Para ver los últimos logs de los servicios iniciados ejecute:
 
 ```
