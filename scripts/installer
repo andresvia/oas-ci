@@ -7,9 +7,9 @@ set -eu
 ca_home="/var/lib/docker-ci-swarm-ca"
 fqdn="$(hostname -f)"
 
-if ip addr list | egrep '\b10.0.2.15\b' > /dev/null
+if ip addr list | egrep '\b192.168.12.212\b' > /dev/null
 then
-  ip_addr="10.0.2.15"
+  ip_addr="192.168.12.212"
 else
   echo "Este es un ambiente desconocido, me refuso a instalarme aquí"
   exit 1

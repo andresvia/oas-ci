@@ -27,15 +27,9 @@ vagrant ssh -c "bash" < scripts/logs
 
 Las URL's por defecto son:
 
-- [Gogs](http://localhost:3000/)
-- [Drone](http://localhost:8000/)
-- [Registry Frontend](http://localhost:8080/)
-
-Los puertos cambiaran si estos ya se encuentran ocupados, encuentre los puertos reservados por Vagrant con el comando:
-
-```
-vagrant port
-```
+- [Gogs](http://192.168.12.212:3000/)
+- [Drone](http://192.168.12.212:8000/)
+- [Registry Frontend](http://192.168.12.212:8080/)
 
 ## ¿Cómo configurar esto?
 
@@ -102,6 +96,7 @@ Si utiliza un proxy web, estas direcciones deben estar en la lista de exlusión:
 ```
 10.0.2.15
 172.17.0.1
+192.168.12.212
 ```
 
 Si hay problemas de descarga (por ejemplo por estar destrás de un proxy) asegurar que los archivos necesarios fueron cambiados, es decir que las variables fueron pasadas del OS host al OS guest.
