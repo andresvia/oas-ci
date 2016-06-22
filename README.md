@@ -103,6 +103,20 @@ Si utiliza un proxy web, estas direcciones deben estar en la lista de exlusión:
 10.0.2.15,172.17.0.1
 ```
 
+Si hay problemas de descarga (por ejemplo por estar destrás de un proxy) asegurar que los archivos necesarios fueron cambiados para pasar la configuración de proxy local al OS guest.
+
+```
+vagrant reload
+vagrant provision
+```
+
+Los archivos cambiados son:
+
+```
+/etc/environment
+/etc/sysconfig/docker
+```
+
 ## Paso a producción (o instalación sin hipervisor)
 
 El paso a producción o la instalación sin hipervisor no es totalmente automático (pero se acerca bastánte) y requiere algunas habilidades de SysAdmin.
