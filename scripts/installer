@@ -7,12 +7,9 @@ set -eu
 ca_home="/var/lib/docker-ci-swarm-ca"
 fqdn="$(hostname -f)"
 
-if ip addr list | egrep '\b192.168.12.212\b' > /dev/null
+if ip addr list | egrep '\b10.0.2.15\b' > /dev/null
 then
-  ip_addr="192.168.12.212"
-elif ip addr list | egrep '\b192.168.12.37\b' > /dev/null
-then
-  ip_addr="192.168.12.37"
+  ip_addr="10.0.2.15"
 else
   echo "Este es un ambiente desconocido, me refuso a instalarme aquí"
   exit 1
@@ -20,7 +17,7 @@ fi
 
 # ubicación de los paquetes
 ci_ca_pkg="https://github.com/andresvia/oas-ci-swarm-ca/releases/download/v0.0.2/oas-ci-swarm-ca-0.0.2_travis.4-1.x86_64.rpm"
-ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.1.2/oas-ci-server-0.1.2_travis.30-1.x86_64.rpm"
+ci_server_pkg="https://github.com/andresvia/oas-ci-server/releases/download/v0.1.4/oas-ci-server-0.1.4_travis.34-1.x86_64.rpm"
 ci_agent_pkg="https://github.com/andresvia/oas-ci-agent/releases/download/v0.1.2/oas-ci-agent-0.1.2_travis.27-1.x86_64.rpm"
 
 # hay muchas políticas de selinux que hay que encontrar primero antes de habilitar el modo "enforcing", se deja como tarea para el administrador de sistemas encontrar todas las reglas de selinux necesarias
