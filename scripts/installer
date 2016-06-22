@@ -64,7 +64,11 @@ then
 fi
 
 # esto se debe hacer en los agentes para permitir que puedan bajar imágenes del registry o el registry debe contar con certificados SSL
-sed -i.bak "s|^#\? \?INSECURE_REGISTRY=.*|INSECURE_REGISTRY='--insecure-registry=${ip_addr}:5000'|" /etc/sysconfig/docker
+sed -i.bak "s|^#\? \?INSECURE_REGISTRY=.*|INSECURE_REGISTRY=--insecure-registry=${ip_addr}:5000|" /etc/sysconfig/docker
+
+# configuraciones que vienen en el paquete y se pierden si se ejecuta envtool primero, aquí las recuperamos
+sed -i.bak "s|^#\? \?OPTIONS=.*|OPTIONS=--selinux-enabled|" /etc/sysconfig/docker
+sed -i.bak "s|^#\? \?DOCKER_CERT_PATH=.*|DOCKER_CERT_PATH=/etc/docker|" /etc/sysconfig/docker
 
 # crear el grupo docker de manera que otros usuarios aparte de root lo puedan usar
 groupadd -r docker || true

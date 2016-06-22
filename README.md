@@ -100,21 +100,24 @@ Dónde XXXX es la cantidad de memoria que se ubicará para la máquina virtual (
 Si utiliza un proxy web, estas direcciones deben estar en la lista de exlusión:
 
 ```
-10.0.2.15,172.17.0.1
+10.0.2.15
+172.17.0.1
 ```
 
-Si hay problemas de descarga (por ejemplo por estar destrás de un proxy) asegurar que los archivos necesarios fueron cambiados para pasar la configuración de proxy local al OS guest.
+Si hay problemas de descarga (por ejemplo por estar destrás de un proxy) asegurar que los archivos necesarios fueron cambiados, es decir que las variables fueron pasadas del OS host al OS guest.
 
-```
-vagrant reload
-vagrant provision
-```
-
-Los archivos cambiados son:
+Los archivos cambiados para este propósito son:
 
 ```
 /etc/environment
 /etc/sysconfig/docker
+```
+
+Estos archivos son cambiados automáticamente tomando las variables del entorno actual con los siguientes comandos.
+
+```
+vagrant provision # para hacer el aprovisionamiento de dichos archivos, por ejemplo al cambiar de un ambiente con proxy a uno sin proxy
+vagrant reload    # para asegurar que todos los servicios leen dichos archivos con los nuevos valores
 ```
 
 ## Paso a producción (o instalación sin hipervisor)
