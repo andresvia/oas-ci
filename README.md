@@ -6,14 +6,14 @@ Requiere [Vagrant](http://www.vagrantup.com/) reciente. Si esto no es una opció
 
 Simplemente ejecute el comando apropiado:
 
-Para usar libvirt como proveedor utilice
+Para usar libvirt como proveedor utilice: (**Necesita 2GB de RAM libres y 1 vCPUS**)
 
 ```
 vagrant plugin install vagrant-libvirt
 vagrant up --provider libvirt
 ```
 
-Para usar VirtualBox como proveedor, instale VirtualBox y utilice:
+Para usar VirtualBox como proveedor, instale VirtualBox y utilice: (**Necesita 4GB de RAM libres y 2 vCPUS**)
 
 ```
 vagrant up --provider virtualbox
