@@ -65,7 +65,7 @@ Esto significa que **registry-frontend** está listo
 /usr/bin/docker-current start --attach=true registry-frontend
 ```
 
-Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022.
+Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022 y la dirección o nombre del host.
 
 ![pantallazo de instalación de gogs](http://i.imgur.com/5d8lsSP.png)
 
