@@ -10,7 +10,7 @@ Para usar libvirt como proveedor utilice: (**Necesita 2GB de RAM libres y 1 vCPU
 
 ```
 vagrant plugin install vagrant-libvirt
-vagrant up --provider libvirt
+vagrant up --provider libvirt && vagrant reload
 ```
 
 Para usar VirtualBox como proveedor, instale VirtualBox y utilice: (**Necesita 4GB de RAM libres y 2 vCPUS**)
