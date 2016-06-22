@@ -67,7 +67,7 @@ Esto significa que **registry-frontend** está listo
 
 Luego visite la URL de Gogs en su navegador. Realice la instalación de Gogs, teniendo en cuenta que el puerto de escucha de SSH es 10022.
 
-![pantallazo de instalación de gogs](http://i.imgur.com/YyAC2WN.png)
+![pantallazo de instalación de gogs](http://i.imgur.com/5d8lsSP.png)
 
 Visite luego la URL de Drone, (las credenciales a utilizar son las mismas de Gogs), luego conecte cualquier repositorio que haya creado en Gogs para comenzar a hacer integración contínua.
 
