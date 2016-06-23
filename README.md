@@ -2,7 +2,7 @@
 
 Requiere [Vagrant](http://www.vagrantup.com/) reciente. Si esto no es una opción para usted pase directamente a la sección **Paso a producción (o instalación sin hipervisor)**.
 
-Para pruebas locales debe tener instalado [Docker](https://www.docker.com/) y [Drone CLI](http://readme.drone.io/devs/cli/). La instalación de estos no se cubre en este documento.
+Para pruebas locales debe tener instalado [Git](https://git-scm.com/), [Docker](https://www.docker.com/) y [Drone CLI](http://readme.drone.io/devs/cli/). La instalación de estos no se cubre en este documento.
 
 ## ¿Cómo utilizar esto?
 
