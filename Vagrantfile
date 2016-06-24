@@ -17,7 +17,7 @@ envtool_env="sudo env"
 envtool_cmd="/usr/local/sbin/envtool persist --edit /etc/environment --edit /etc/sysconfig/docker"
 pass_variables = ["HTTP_PROXY", "http_proxy", "HTTPS_PROXY", "https_proxy", "NO_PROXY", "no_proxy"]
 pass_variables.each do |pass_var|
-  envtool_env += " '#{pass_var.gsub(/'/, "")}=#{ENV[pass_var].gsub(/'/, "")}'"
+  envtool_env += " '#{pass_var.gsub(/'/, "")}=#{(ENV[pass_var]||"").gsub(/'/, "")}'"
   envtool_cmd += " --select '#{pass_var.gsub(/'/, "")}'"
 end
 
